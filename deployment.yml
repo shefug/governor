@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: hello
-          image: <<Your DockerHub Username>>/hello:latest
+          image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:latest
           imagePullPolicy: Always
           ports:
           - containerPort: 5000
