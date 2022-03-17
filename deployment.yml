@@ -4,6 +4,9 @@ metadata:
   name: latency-deployment
 spec:
   replicas: 4
+  selector:
+    matchLabels:
+      app: latency
   template:
     metadata:
       labels:
@@ -15,13 +18,9 @@ spec:
         image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:latest
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /fundservice/actuator/health
-            port: 8080
-            scheme: HTTP
+        - containerPort: 8080       
   strategy:
     type: RollingUpdate
-     maxSurge: 25%
-     maxUnavailable: 1
+    rollingUpdate:
+     maxUnavailable: 25%
+     maxSurge: 1
