@@ -2,26 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: latency-deployment
+  labels: {app.kubernetes.io/managed-by: graphite-jenkins-gke}
 spec:
   replicas: 4
   selector:
-    matchLabels:
-      app: latency
+    matchLabels: {app: latency}
   template:
     metadata:
-      labels:
-        app: latency
-        role: rolling-update
+      labels: {app: latency, role: rolling-update}
     spec:
       containers:
       - name: latency-container
         image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:latest
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080       
+        - {containerPort: 8080}
   strategy:
     type: RollingUpdate
-    rollingUpdate:
-     maxUnavailable: 25%
-     maxSurge: 1
-
+    rollingUpdate: {maxUnavailable: 25%, maxSurge: 1}
