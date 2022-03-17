@@ -1,43 +1,26 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello
-  labels:
-    app: hello
+  name: latency-deployment
 spec:
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-      app: hello
-
+  replicas: 4
   template:
     metadata:
       labels:
-        app: hello
-        tier: hello
+        app: latency
+        role: rolling-update
     spec:
       containers:
-        - name: hello
-          image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:latest
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 5000
-            name: hello
-
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: hello
-  labels:
-    app: hello
-spec:
-  ports:
-    - port: 5000
-      targetPort: 5000
-  selector:
-    app: hello
-    tier: hello
-  type: LoadBalancer
+      - name: latency-container
+        image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /fundservice/actuator/health
+            port: 8080
+            scheme: HTTP
+  strategy:
+    type: RollingUpdate
+    rollingUp      maxSurge: 25%
