@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: latency-container
-        image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:v1
+        image: gcr.io/hbl-poc-enterprisefac-pm-prj/asia-south1/latency/springbootlatency:image_tag
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080       
