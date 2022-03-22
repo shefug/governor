@@ -34,11 +34,7 @@ pipeline {
         sh 'echo "checking image scan results and based on that perform next step"'
         }
     }
-    stage ('Git Checkout') {
-      steps {
-        git branch: 'main', url: 'https://github.com/shefug/governor.git'
-        }
-    }
+    
     stage ('updating deployment file with new version') {
       steps {
         sh 'cat deployment/deployment.yml'
