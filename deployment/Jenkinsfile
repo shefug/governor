@@ -39,8 +39,7 @@ pipeline {
         // Change deployed image in canary to the one we just built
           sh 'cat deployment/deployment.yml'
           //sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/*.yaml")
-          //step([$class: 'KubernetesEngineBuilder', namespace:'production', projectId: env.PROJECT, clusterName: env.CLUSTER, zone: env.CLUSTER_ZONE, manifestPattern: 'k8s/services', credentialsId: env.JENKINS_CRED, verifyDeployments: false])
-          step([$class: 'KubernetesEngineBuilder', projectId: 'hbl-poc-enterprisefac-pm-prj', clusterName: 'governor-ef-poc-cluster', zone: 'us-central1', manifestPattern: 'deployment/.', credentialsId: 'hbl-poc-enterprisefac-pm-prj', verifyDeployments: true])
+          step([$class: 'KubernetesEngineBuilder', projectId: 'hbl-poc-enterprisefac-pm-prj', clusterName: 'governor-ef-poc-cluster', zone: 'us-central1', manifestPattern: 'deployment/.', credentialsId: 'hbl-poc-enterprisefac-pm-prj', verifyDeployments: false])
           //sh("echo http://`kubectl --namespace=production get service/${FE_SVC_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'` > ${FE_SVC_NAME}")
         }
       }
